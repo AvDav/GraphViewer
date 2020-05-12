@@ -188,7 +188,7 @@ void FParser::MakeExpression(Token* begin, Token* end, BracketExpArray& bracks) 
 void FParser::SetFunction(CString& str) {
 	m_opers.clear();
 	TokenArray::iterator it;
-	fillTokens((LPCTSTR)str);
+	fillTokens((LPCSTR)str);
 	int count = 0;
 	for(it = m_toks.begin(); it < m_toks.end(); it++) {
 		if(it->isCloseBrack) count++;
@@ -230,12 +230,11 @@ void FParser::SetFunction(CString& str) {
 	delete[] t;
 }
 //------------------------------------------------------------------------------------------//
-double __fastcall FParser::ExecuteExpression(Operation* iter, OperArray& ops) {
-	for(OperArray::iterator i = ops.begin(); i < ops.end(); i++) {
-		if(i->pRes) *(i->pRes) = i->getResult();
-		if(i==ops.end()-1) return i->getResult();
+void __fastcall FParser::ExecuteExpression(Operation* iter, OperArray& ops, double &res) {
+	for (OperArray::iterator i = ops.begin(); i < ops.end(); i++) {
+		if (i->pRes) *(i->pRes) = i->getResult();
+		if (i == ops.end() - 1) res = i->getResult();
 	}
-	return 0.0;
 }
 //------------------------------------------------------------------------------------------//
 void FParser::fillTokens(const char* str) {
@@ -311,7 +310,7 @@ void FParser::fillTokens(const char* str) {
 					if(isUnknown) {
 						CString errStr = "Unknown function: ";
 						errStr += &name[0];
-						MessageBox(NULL, errStr, TEXT("message"), MB_ICONERROR | MB_OK);
+						MessageBox(NULL, errStr, "message", MB_ICONERROR | MB_OK);
 						exit(1);
 					} 
 			}
@@ -376,15 +375,16 @@ void FParser::fillTokens(const char* str) {
 	m_toks.push_back(tmp);
 }
 //------------------------------------------------------------------------------------------//
-double FParser::Execute(double arg, OperArray *op) {
+void FParser::Execute(double arg, double &res, OperArray *op) {
 	OperArray* buf = (!op ? &m_opers : op);
+	if (buf->empty()) return;
 	for(Operation* iter = &buf->front(); iter <= &buf->back(); ++iter) {
 		if(iter->left.isVar)
 			iter->left.operand = arg;
 		if(iter->right.isVar)
 			iter->right.operand = arg;
 	}
-	return ExecuteExpression(&buf->back(), *buf);
+	ExecuteExpression(&buf->back(), *buf, res);
 }
 //------------------------------------------------------------------------------------------//
 double Operation::getResult() {
@@ -423,7 +423,7 @@ double div(double a, double b) {
 		res = a / b;
 	}
 	catch (...) {
-		::MessageBox(0, TEXT("Divide by 0 error"), TEXT("Cuation"), MB_OK|MB_ICONERROR);
+		::MessageBox(0, "Divide by 0 error", "Cuation", MB_OK|MB_ICONERROR);
 		::ExitProcess(::GetLastError());
 	}
 	return res;

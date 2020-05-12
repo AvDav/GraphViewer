@@ -54,16 +54,10 @@ using namespace std;
 #define ADD    3
 #define SUB    4
 
-//declarations of new types
-struct Token;
-struct BracketExp;
-struct Operation;
-struct Function;
-
-typedef vector<Token> TokenArray;
-typedef vector<BracketExp> BracketExpArray;
-typedef vector<Operation> OperArray;
-typedef vector<Function> FuncArray;
+#define TokenArray vector<Token> 
+#define BracketExpArray vector<BracketExp>
+#define OperArray vector<Operation>
+#define FuncArray vector<Function>
 
 //declarations of supported operations
 inline double power(double, double);
@@ -72,10 +66,11 @@ inline double div(double, double);
 inline double add(double, double);
 inline double sub(double, double);
 
+
 //------------------The following structures are needed for parsing------------//
 struct funcParams {
-	friend CArchive& operator <<(CArchive& ar, funcParams);
-	friend CArchive& operator >>(CArchive& ar, funcParams&);
+	friend CArchive& operator <<(CArchive &ar, funcParams);
+	friend CArchive& operator >>(CArchive &ar, funcParams&);
 	CString fName;
 	double  from;
 	double  to;
@@ -88,20 +83,20 @@ struct Operand {
 };
 /*****************************************************************************/
 struct func {
-	char* fName;
+	char   *fName;
 	double(*fpfn)(double);
 };
 /*****************************************************************************/
 struct Operation {
-	friend CArchive& operator <<(CArchive& ar, Operation);
-	friend CArchive& operator >>(CArchive& ar, Operation&);
+	friend CArchive& operator <<(CArchive &ar, Operation);
+	friend CArchive& operator >>(CArchive &ar, Operation&);
 
 	int     Index;
 	int     leftIndex;
 	int     rightIndex;
 	short   resultNeg;
 	short   COP;
-	double* pRes;
+	double *pRes;
 	Operand left;
 	Operand right;
 	double  getResult();
@@ -110,8 +105,8 @@ struct Operation {
 };
 /*****************************************************************************/
 struct Function {
-	friend  CArchive& operator <<(CArchive&, Function);
-	friend  CArchive& operator >>(CArchive&, Function&);
+	friend  CArchive& operator <<(CArchive &, Function);
+	friend  CArchive& operator >>(CArchive &, Function&);
 	funcParams  params;
 	int         opCount;
 	OperArray   ops;
@@ -141,18 +136,18 @@ struct Token {
 /*****************************************************************************/
 class FParser {
 public:
-	double	__fastcall Execute(double, OperArray* = NULL);
-	void	SetFunction(CString&);
-	void	GetOpers(OperArray& ops) const { ops = m_opers; Initialize(ops); }
-	static bool isNumber(const char*, const char*);
+	void	__fastcall Execute(double arg, double &res, OperArray * = nullptr);
+	void	SetFunction(CString &);
+	void	GetOpers(OperArray &ops) const { ops = m_opers; Initialize(ops); }
+	static bool isNumber(const char *, const char*);
 	static void Initialize(OperArray&);
 protected:
-	void   reverseString(char*);
-	void   fillTokens(const char*);
-	void   MakeExpression(Token*, Token*, BracketExpArray&);
-	double getNumber(char*&);
+	void   reverseString(char *);
+	void   fillTokens(const char *);
+	void   MakeExpression(Token *, Token *, BracketExpArray &);
+	double getNumber(char *&);
 	int    getCop(char);
-	double __fastcall ExecuteExpression(Operation*, OperArray&);
+	void __fastcall ExecuteExpression(Operation *, OperArray &, double &);
 	OperArray  m_opers;
 	TokenArray m_toks;
 };

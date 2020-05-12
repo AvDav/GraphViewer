@@ -12,11 +12,11 @@ END_MESSAGE_MAP()
 //------------------------------------------------------------------------------------------//
 void ErrorMsg(int code, DWORD flags)
 {
-	TCHAR *buff = new TCHAR[MAX_PATH];
+	char *buff = new char[MAX_PATH];
 	if(code == ERROR_SUCCESS)
 		return;
-	FormatMessage(flags, NULL, code, 0, &buff[0], MAX_PATH, NULL);
-	MessageBox(NULL, &buff[0], TEXT("Error Message"), MB_OK | MB_ICONERROR);
+	FormatMessage(flags, NULL, code, 0, buff, MAX_PATH, NULL);
+	MessageBox(NULL, buff, "Error Message", MB_OK | MB_ICONERROR);
 	delete[] buff;
 }
 //------------------------------------------------------------------------------------------//

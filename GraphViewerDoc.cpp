@@ -37,9 +37,9 @@ IMPLEMENT_DYNCREATE(CGraphViewerDoc, CDocument)
 		m_parsed = 0;
 		m_fCount = 0;
 		m_fAr.clear();
-		((CMainFrame*)AfxGetMainWnd())->CMainFrame::ClearFields();
+		/*((CMainFrame*)AfxGetMainWnd())->CMainFrame::ClearFields();
 		POSITION pos = GetFirstViewPosition();
-		((CGraphViewerView*)GetNextView(pos))->Reset();
+		((CGraphViewerView*)GetNextView(pos))->Reset();*/
 		return TRUE;
 	}
 	//------------------------------------------------------------------------------------------//
@@ -86,10 +86,7 @@ IMPLEMENT_DYNCREATE(CGraphViewerDoc, CDocument)
 	{
 		if (!CDocument::OnOpenDocument(lpszPathName))
 			return FALSE;
-		CMDIFrameWnd* pFrame = (CMDIFrameWnd*)AfxGetApp()->m_pMainWnd;
-		CMDIChildWnd* pChild = (CMDIChildWnd*)pFrame->GetActiveFrame();
-		CGraphViewerView* pView = (CGraphViewerView*)pChild->GetActiveView();
-		pView->OnFitToWindow();
+
 		SetTitle(lpszPathName);
 		return TRUE;
 	}

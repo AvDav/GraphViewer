@@ -94,7 +94,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 		}
 		for(i = 1; i < ARRSIZE(indicators); i++)
 			m_wndStatusBar.SetPaneInfo(i, ID_INDICATOR_SCRL, 
-			i ==3 ? SBPS_NORMAL : SBPS_POPOUT, i==3 ? 170 : 190);
+			i ==3 ? SBPS_NORMAL : SBPS_POPOUT, i==3 ? 130 : 150);
 
 		m_wndStatusBar.GetStatusBarCtrl().SetIcon(1, AfxGetApp()->LoadIcon(IDI_X));
 		m_wndStatusBar.GetStatusBarCtrl().SetIcon(2, AfxGetApp()->LoadIcon(IDI_FX));
@@ -161,25 +161,20 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	//------------------------------------------------------------------------------------------//
 	CWnd* CMainFrame::GetControl(int id)
 	{
-		switch(id) 
+		switch(id)
 		{
-			case 0 : return &m_FuncCombo;
-			case 1 : return &m_editFrom;
-			case 2 : return &m_editTo;
-			case 3 : return &m_editDelta;
-			default : return NULL;
+		case 0 : return &m_FuncCombo;
+		case 1 : return &m_editFrom;
+		case 2 : return &m_editTo;
+		case 3 : return &m_editDelta;
+		default : return NULL;
 		}
 	}
 	//------------------------------------------------------------------------------------------//
 	void CMainFrame::ClearFields()
 	{
-		static int cnt = 0;
-		if (++cnt != 1) {
-			m_FuncCombo.SetWindowTextA("");
-			m_FuncCombo.ResetContent();
-			m_editFrom.SetWindowTextA("");
-			m_editTo.SetWindowTextA("");
-			m_editDelta.SetWindowTextA("");
-		}
+		//m_FuncCombo.ResetContent();
+		for(int i = 0; i < 4; i++)
+			GetControl(i)->SetWindowText("");
 	}
 

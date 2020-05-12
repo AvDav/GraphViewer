@@ -39,7 +39,7 @@ public:
 		if(!pParser || !pFunc || arg < m_x0 - pFunc->params.delta || arg > m_xn + pFunc->params.delta) 
 			return FALSE; //failed
 
-		*fValue = pParser->Execute(arg, &(pFunc->ops));
+		pParser->Execute(arg, * fValue, &(pFunc->ops));
 		return TRUE;
 	}
 	//---------------------------------------------------------------------------------------------//
@@ -115,7 +115,7 @@ public:
 			arg = ScreenXToArg(ptTo.x);
 			if(!GetFuncValue(arg, &fVal, pFunc, pParser))
 				break;
-			strCheck.Format(TEXT("%lf"), fVal);
+			strCheck.Format("%lf", fVal);
 			if(strCheck.GetAt(3) == '#') //NaN (checking by _isnan() doesn't work!?)
 			{
 				(ptTo.x)++;
@@ -144,8 +144,10 @@ public:
 		m_rect.top = rc.top;
 		m_rect.right = rc.right;
 		m_rect.bottom = rc.bottom;
+
 		m_x0 = pFunc->params.from;
 		m_xn = pFunc->params.to;
+
 		UpdateRatios(pFunc);
 	}
 	//---------------------------------------------------------------------------------------------//
@@ -162,8 +164,7 @@ public:
 	//---------------------------------------------------------------------------------------------//
 	int FValToScreenY(double fval, Function *pFunc)
 	{
-		if(pFunc) return int(m_rect.bottom - (fval - pFunc->min)*m_ratioY);
-		return -1;
+		return int(m_rect.bottom - (fval - pFunc->min)*m_ratioY);
 	}
 	//---------------------------------------------------------------------------------------------//
 	int ArgToScreenX(double arg)
@@ -203,6 +204,7 @@ class CGraphViewerView : public CFormView
 protected: 
 	CGraphViewerView();
 	DECLARE_DYNCREATE(CGraphViewerView)
+
 	//{{AFX_MSG(CGraphViewerView)
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
@@ -234,6 +236,7 @@ protected:
 	afx_msg void OnUpdateFitToWindow(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+
 public:
 	void Reset();
 	//{{AFX_DATA(CGraphViewerView)
@@ -286,6 +289,8 @@ private:
 	bool        m_showPt;
 	bool        m_showGrid;
 	bool		m_disableGoto;
+public:
+	afx_msg void OnFileNew();
 };
 
 #ifndef _DEBUG 

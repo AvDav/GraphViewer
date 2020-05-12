@@ -1,4 +1,4 @@
-// Microsoft Visual C++ generated resource script.
+//Microsoft Developer Studio generated resource script.
 //
 #include "resource.h"
 
@@ -13,11 +13,13 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Russian (Russia) resources
+// Russian resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
+#ifdef _WIN32
 LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
 #pragma code_page(1251)
+#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -25,18 +27,18 @@ LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE MOVEABLE PURE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE MOVEABLE PURE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE MOVEABLE PURE 
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -62,8 +64,15 @@ END
 // Dialog
 //
 
-IDD_SAVE DIALOG 0, 0, 300, 141
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_WAIT DIALOG DISCARDABLE  0, 0, 186, 33
+STYLE DS_MODALFRAME | WS_POPUP
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Performing the action...",IDC_STATIC,57,3,73,8
+END
+
+IDD_SAVE DIALOG DISCARDABLE  0, 0, 300, 141
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Save function(s)"
 FONT 8, "MS Sans Serif"
 BEGIN
@@ -71,7 +80,8 @@ BEGIN
     PUSHBUTTON      "&Cancel",IDCANCEL,243,120,50,14
     DEFPUSHBUTTON   "&All",ID_ALL,7,120,50,14
     DEFPUSHBUTTON   "&None",ID_NONE,58,120,50,14
-    CONTROL         "List2",IDC_LIST1,"SysListView32",LVS_REPORT | WS_BORDER | WS_TABSTOP,7,7,286,108
+    CONTROL         "List2",IDC_LIST1,"SysListView32",LVS_REPORT | WS_BORDER | 
+                    WS_TABSTOP,7,7,286,108
 END
 
 
@@ -81,8 +91,16 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO
+GUIDELINES DESIGNINFO MOVEABLE PURE 
 BEGIN
+    IDD_WAIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 26
+    END
+
     IDD_SAVE, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -101,26 +119,22 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\GRAPH0APP.ICO"
-
-IDR_GRAPHVTYPE          ICON                    "res\\GRAPHDOC.ICO"
-
-IDI_X                   ICON                    "res\\icon1.ico"
-
-IDI_FX                  ICON                    "res\\icon2.ico"
-
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\GRAPH0APP.ICO"
+IDR_GRAPHVTYPE          ICON    DISCARDABLE     "res\\GRAPHDOC.ICO"
+IDI_X                   ICON    DISCARDABLE     "res\\icon1.ico"
+IDI_FX                  ICON    DISCARDABLE     "res\\icon2.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // String Table
 //
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_BUILD                "Build a graph"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_GRID_CHANGEINTERVAL  "Open grid settings dialog"
     ID_ZOOMIN               "Zoom in"
@@ -128,7 +142,7 @@ BEGIN
     ID_SAVETXT              "Save function(s) values"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_ZOOMIN_ALONG_OX      "Zoom in along OX"
     ID_ZOOMOUT_ALONG_OX     "Zoom out along OX"
@@ -137,43 +151,48 @@ BEGIN
     ID_SHOWGRID             "Show or hide the grid"
 END
 
-#endif    // Russian (Russia) resources
+#endif    // Russian resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// English (United States) resources
+// English (U.S.) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
+#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG 0, 0, 149, 124
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 149, 124
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About GraphViewer"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "GraphViewer Version 1.0\nWritten by David Avakimyan",IDC_STATIC1,40,10,102,16,SS_NOPREFIX
+    LTEXT           "GraphViewer Version 1.0\nWritten by David Avakimyan",
+                    IDC_STATIC1,40,10,102,16,SS_NOPREFIX
     DEFPUSHBUTTON   "OK",IDOK,49,103,50,14,WS_GROUP
     ICON            IDR_MAINFRAME,IDC_STATIC,13,11,20,20
-    LTEXT           "This version supports the following\nfunctions, operations and constants:\n\nFunctions:\tsin(),\tcos(),\ttan(),\tln(),\tsinh(),\tcosh(),\ttanh().",IDC_STATIC,15,37,125,42
+    LTEXT           "This version supports the following\nfunctions, operations and constants:\n\nFunctions:\tsin(),\tcos(),\ttan(),\tln(),\tsinh(),\tcosh(),\ttanh().",
+                    IDC_STATIC,15,37,125,42
     LTEXT           "Operations:\t+, —, *, /, ^.",IDC_STATIC,15,81,124,12
-    LTEXT           "Constants:\te, pi.",IDC_STATIC,15,92,107,8,SS_CENTERIMAGE
+    LTEXT           "Constants:\te, pi.",IDC_STATIC,15,92,107,8,
+                    SS_CENTERIMAGE
 END
 
-IDD_GRAPHVIEWER_FORM DIALOG 0, 0, 320, 198
-STYLE DS_SETFONT | WS_CHILD
+IDD_GRAPHVIEWER_FORM DIALOG DISCARDABLE  0, 0, 320, 198
+STYLE WS_CHILD
 FONT 8, "MS Sans Serif"
 BEGIN
 END
 
-IDD_DIALOGBAR DIALOG 0, 0, 447, 30
-STYLE DS_SETFONT | WS_CHILD
+IDD_DIALOGBAR DIALOG DISCARDABLE  0, 0, 447, 30
+STYLE WS_CHILD
 FONT 8, "MS Sans Serif"
 BEGIN
 END
@@ -185,7 +204,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO
+GUIDELINES DESIGNINFO MOVEABLE PURE 
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -219,15 +238,14 @@ END
 // Bitmap
 //
 
-IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
-
+IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Menu
 //
 
-IDR_MAINFRAME MENU
+IDR_MAINFRAME MENU DISCARDABLE 
 BEGIN
     POPUP "&File"
     BEGIN
@@ -253,9 +271,12 @@ BEGIN
             MENUITEM "Zoom &out\tCtrl + NumPad-",   ID_ZOOMOUT
             MENUITEM SEPARATOR
             MENUITEM "Zoom in along &OX\tAlt + NumPad+", ID_ZOOMIN_ALONG_OX
-            MENUITEM "Zoom out along O&X\tAlt + NumPad-", ID_ZOOMOUT_ALONG_OX
-            MENUITEM "Zoom in &along OY\tShift + NumPad+", ID_ZOOMIN_ALONG_OY
-            MENUITEM "Zoom out along O&Y\tShift + NumPad-", ID_ZOOMOUT_ALONG_OY
+            MENUITEM "Zoom out along O&X\tAlt + NumPad-", 
+                                                    ID_ZOOMOUT_ALONG_OX
+            MENUITEM "Zoom in &along OY\tShift + NumPad+", 
+                                                    ID_ZOOMIN_ALONG_OY
+            MENUITEM "Zoom out along O&Y\tShift + NumPad-", 
+                                                    ID_ZOOMOUT_ALONG_OY
             MENUITEM SEPARATOR
             MENUITEM "&Fit to window",              ID_FIT_TO_WINDOW
         END
@@ -278,7 +299,7 @@ END
 // Accelerator
 //
 
-IDR_MAINFRAME ACCELERATORS
+IDR_MAINFRAME ACCELERATORS MOVEABLE PURE 
 BEGIN
     "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
@@ -302,6 +323,7 @@ BEGIN
 END
 
 
+#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -324,13 +346,13 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "FileDescription", "GraphViewer"
-            VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "InternalName", "GraphViewer"
-            VALUE "LegalCopyright", "Copyright (C) 2001"
-            VALUE "OriginalFilename", "GraphViewer.EXE"
-            VALUE "ProductName", "GraphViewer Application"
-            VALUE "ProductVersion", "1, 0, 0, 1"
+            VALUE "FileDescription", "GraphViewer\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "GraphViewer\0"
+            VALUE "LegalCopyright", "Copyright (C) 2001\0"
+            VALUE "OriginalFilename", "GraphViewer.EXE\0"
+            VALUE "ProductName", "GraphViewer Application\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
         END
     END
     BLOCK "VarFileInfo"
@@ -339,13 +361,15 @@ BEGIN
     END
 END
 
+#endif    // !_MAC
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR 16, 16
+IDR_MAINFRAME TOOLBAR MOVEABLE PURE  16, 16
 BEGIN
     BUTTON      ID_APP_EXIT
     SEPARATOR
@@ -370,18 +394,18 @@ END
 // String Table
 //
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     IDR_MAINFRAME           "GraphViewer\n\n\nGraphViewer Files (*.grv)\n.grv\nGraphViewer.Document\nGraphV Document"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     AFX_IDS_APP_TITLE       "GraphViewer"
     AFX_IDS_IDLEMESSAGE     "Ready"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_INDICATOR_EXT        "EXT"
     ID_INDICATOR_CAPS       "CAP"
@@ -391,7 +415,7 @@ BEGIN
     ID_INDICATOR_REC        "REC"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_FILE_NEW             "Create a new document\nNew"
     ID_FILE_OPEN            "Open an existing document\nOpen"
@@ -400,13 +424,13 @@ BEGIN
     ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_APP_ABOUT            "Display program information"
     ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_FILE_MRU_FILE1       "Open this document"
     ID_FILE_MRU_FILE2       "Open this document"
@@ -426,18 +450,18 @@ BEGIN
     ID_FILE_MRU_FILE16      "Open this document"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
     ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_EDIT_CLEAR           "Erase the selection\nErase"
     ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
@@ -452,13 +476,13 @@ BEGIN
     ID_EDIT_REDO            "Redo the previously undone action\nRedo"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
     ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     AFX_IDS_SCSIZE          "Change the window size"
     AFX_IDS_SCMOVE          "Change the window position"
@@ -469,13 +493,13 @@ BEGIN
     AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     AFX_IDS_SCRESTORE       "Restore the window to normal size"
     AFX_IDS_SCTASKLIST      "Activate Task List"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_FUNCTION             "Open input dialog for function."
     ID_GRID_CHANGEINTERVAL  "Open grid settings dialog"
@@ -484,7 +508,7 @@ BEGIN
     ID_SAVETXT              "Save function(s) values"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_ZOOMIN_ALONG_OX      "Zoom in along OX"
     ID_ZOOMOUT_ALONG_OX     "Zoom out along OX"
@@ -493,12 +517,12 @@ BEGIN
     ID_SHOWGRID             "Show or hide the grid"
 END
 
-STRINGTABLE
+STRINGTABLE DISCARDABLE 
 BEGIN
     ID_BUILD                "Plotting a graph"
 END
 
-#endif    // English (United States) resources
+#endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

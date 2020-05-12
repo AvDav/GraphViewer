@@ -22,16 +22,20 @@ protected:
 	afx_msg void OnUpdatePane(CCmdUI *pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
+
 	CComboBoxEx        m_FuncCombo;
 	CEdit              m_editFrom;
 	CEdit              m_editTo;
 	CEdit              m_editDelta;
 	CButton			   m_DrawButton;
+
 	CButton			   m_GotoButton;
 	CEdit			   m_editGoto;
+
 	CStatusBar         m_wndStatusBar;
 	CToolBar		   m_wndToolBar;
 	CDialogBar		   m_wndDlgBar;
+
 	void ShowTime();
 public:
 	CWnd* GetControl(int);
