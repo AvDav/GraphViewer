@@ -6,8 +6,6 @@
 #define FINEDIT			203
 #define DELTAEDIT		204
 #define RUNBUTTON		205
-#define GOTOEDIT		206
-#define GOTOBUT			207
 #define MINSTEPCOUNT	5
 
 class CMainFrame : public CFrameWnd
@@ -28,10 +26,6 @@ protected:
 	CEdit              m_editTo;
 	CEdit              m_editDelta;
 	CButton			   m_DrawButton;
-
-	CButton			   m_GotoButton;
-	CEdit			   m_editGoto;
-
 	CStatusBar         m_wndStatusBar;
 	CToolBar		   m_wndToolBar;
 	CDialogBar		   m_wndDlgBar;
@@ -39,8 +33,6 @@ protected:
 	void ShowTime();
 public:
 	CWnd* GetControl(int);
-	void SetGotoReadOnly(BOOL set = TRUE) { m_editGoto.SetReadOnly(set); }
-	void GetGotoContent(CString &str) { m_editGoto.GetWindowText(str); }
 	//{{AFX_VIRTUAL(CMainFrame)
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	//}}AFX_VIRTUAL

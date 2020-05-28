@@ -39,7 +39,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 		lf.lfQuality = ANTIALIASED_QUALITY;
 		lf.lfHeight = 16;
 		lf.lfWeight = FW_BOLD;
-		strcpy_s(lf.lfFaceName, TEXT("Tahoma"));
+		strcpy_s(lf.lfFaceName, TEXT("Arial"));
 		font.CreateFontIndirect(&lf);
 
 		if(CFrameWnd::OnCreate(lpCreateStruct) == -1)
@@ -105,12 +105,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 
 		DWORD width = m_wndToolBar.GetToolBarCtrl().GetButtonSize();
 		UINT offset = width*(m_wndToolBar.GetToolBarCtrl().GetButtonCount() - 1)-20;
-		m_GotoButton.Create("Go to", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE, 
-			CRect(offset, 0, offset + 60, 23), FromHandle(m_wndToolBar.m_hWnd), GOTOBUT);
-		m_GotoButton.SetFont(&font);
-		m_editGoto.Create(ES_CENTER | WS_VISIBLE | WS_CHILD | WS_BORDER | ES_AUTOHSCROLL, 
-			CRect(offset + 60, 0, offset + 200, 23), FromHandle(m_wndToolBar.m_hWnd), GOTOEDIT);
-		m_editGoto.SetFont(&font);
 		return 0;
 	}
 	//------------------------------------------------------------------------------------------//
@@ -163,18 +157,19 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	{
 		switch(id)
 		{
-		case 0 : return &m_FuncCombo;
-		case 1 : return &m_editFrom;
-		case 2 : return &m_editTo;
-		case 3 : return &m_editDelta;
-		default : return NULL;
+			case 0 : return &m_FuncCombo;
+			case 1 : return &m_editFrom;
+			case 2 : return &m_editTo;
+			case 3 : return &m_editDelta;
+			default : return nullptr;
 		}
 	}
 	//------------------------------------------------------------------------------------------//
 	void CMainFrame::ClearFields()
 	{
-		//m_FuncCombo.ResetContent();
-		for(int i = 0; i < 4; i++)
-			GetControl(i)->SetWindowText("");
+		m_FuncCombo.ResetContent();
+		m_editFrom.SetWindowText(TEXT(""));
+		m_editTo.SetWindowText(TEXT(""));
+		m_editDelta.SetWindowText(TEXT(""));
 	}
 

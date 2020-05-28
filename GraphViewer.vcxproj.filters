@@ -27,13 +27,7 @@
     <ClCompile Include="GraphViewerView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GridPropDlg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MainFrm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ProgressBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SaveDlg.cpp">
@@ -61,13 +55,7 @@
     <ClInclude Include="GraphViewerView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GridPropDlg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MainFrm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ProgressBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">

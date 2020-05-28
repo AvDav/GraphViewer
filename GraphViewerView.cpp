@@ -3,8 +3,8 @@
 #include "GraphViewer.h"
 #include "GraphViewerDoc.h"
 #include "GraphViewerView.h"
-#include "ProgressBar.h"
 #include "SaveDlg.h"
+#include "GridPropDlg.h"
 
 #include <fstream>
 //------------------------------------------------------------------------------------------//
@@ -33,9 +33,7 @@ IMPLEMENT_DYNCREATE(CGraphViewerView, CFormView)
 		ON_UPDATE_COMMAND_UI(ID_ZOOMOUT_ALONG_OY, OnUpdateZoomoutAlongOy)
 		ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, OnUpdateFileSave)
 		ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_AS, OnUpdateFileSaveAs)
-		ON_UPDATE_COMMAND_UI(GOTOBUT, OnUpdateGotoButton)
 		ON_COMMAND(ID_BUILD, OnBuild)
-		ON_BN_CLICKED(GOTOBUT, OnGoto)
 		ON_WM_RBUTTONDOWN()
 		ON_UPDATE_COMMAND_UI(ID_SHOWGRID, OnUpdateShowgrid)
 		ON_COMMAND(ID_FIT_TO_WINDOW, OnFitToWindow)
@@ -97,7 +95,7 @@ IMPLEMENT_DYNCREATE(CGraphViewerView, CFormView)
 			pEdit->SetWindowText(s);
 
 			if(!m_graph)
-				m_graph = new CGraph(m_GraphRect, m_curFunc, RGB(0,0,255));
+				m_graph = new CGraph(m_GraphRect, m_curFunc, GetDocument()->m_gridCol);
 
 			ResetZoom();
 			UpdateGraph(2);
@@ -144,21 +142,16 @@ IMPLEMENT_DYNCREATE(CGraphViewerView, CFormView)
 			COLORREF col = RGB(0, 0, 0);
 			FParser Parser;
 			CBrush br;
-			CPen *pPen = new CPen(PS_SOLID, 1, col);
+			CPen Pen(PS_SOLID, 1, col);
 			double res;
 			Parser.Execute(m_clArg, res, &(m_curFunc->ops));
 
 			br.CreateSolidBrush(col);
-			pDC->SelectObject(pPen);
+			pDC->SelectObject(&Pen);
 			pDC->SelectObject(&br);
-
 			int x = m_graph->ArgToScreenX(m_clArg);
 			int y = m_graph->FValToScreenY(res, m_curFunc);
-
 			pDC->Ellipse(x - 3, y - 3, x + 3, y + 3);
-			DeleteObject(&br);
-			DeleteObject(pPen);
-			delete pPen;
 		}
 	}
 	//------------------------------------------------------------------------------------------//
@@ -193,21 +186,6 @@ IMPLEMENT_DYNCREATE(CGraphViewerView, CFormView)
 		int n = int(N);
 		FParser Parser;
 		double max, min, val;
-		RECT rc;
-		CDialog dlg;
-
-		EnableWindow(FALSE);
-
-		dlg.Create(IDD_WAIT);
-		dlg.CenterWindow();
-		dlg.ShowWindow(SW_SHOW);
-		dlg.UpdateWindow();
-		USHORT ar[6] = {0, 0, 0, 0xffff, 0, 0};
-		ProgressBar bar(NULL, n - 1, ar, RGB(0xff, 0xff, 0xff));
-		dlg.GetClientRect(&rc);
-		bar.Create(CRect(rc.left + 1, rc.top + 20, rc.right - 1, rc.bottom - 1), 
-			1023, FromHandle((dlg.m_hWnd)));
-		dlg.UpdateWindow();
 		int from = 1;
 
 		while(from <= n)
@@ -218,7 +196,6 @@ IMPLEMENT_DYNCREATE(CGraphViewerView, CFormView)
 				break;
 			arg += m_curFunc->params.delta;
 			from++;
-			bar.DoStep();
 		}
 		if(from == n)
 		{
@@ -236,16 +213,12 @@ IMPLEMENT_DYNCREATE(CGraphViewerView, CFormView)
 				max = val;
 			if(min > val)
 				min = val;
-
-			bar.DoStep();
 		}
 		pDoc->m_parsed = 1;
 
 		fabs(max) > fabs(min) ? m_curFunc->absMax = fabs(max) : m_curFunc->absMax = fabs(min);
 		m_curFunc->max = max;
 		m_curFunc->min = min;
-		dlg.DestroyWindow();
-		EnableWindow(TRUE);
 	}
 	//------------------------------------------------------------------------------------------//
 	void CGraphViewerView::OnLButtonDown(UINT nFlags, CPoint point) 
@@ -392,7 +365,8 @@ IMPLEMENT_DYNCREATE(CGraphViewerView, CFormView)
 		GetAbsMaxValue();
 		ResetZoom();
 
-		if(!m_graph) m_graph = new CGraph(m_GraphRect, m_curFunc, GetDocument()->m_gridCol);
+		if(!m_graph) 
+			m_graph = new CGraph(m_GraphRect, m_curFunc, GetDocument()->m_gridCol);
 		OnFitToWindow();
 	}
 	//------------------------------------------------------------------------------------------//
@@ -409,24 +383,11 @@ IMPLEMENT_DYNCREATE(CGraphViewerView, CFormView)
 		{
 			std::ofstream ofs((LPCSTR)dlg.GetPathName());
 			if (ofs.is_open()) {
-				CDialog dlg1;
 				FParser Parser;
 				int count = 0;
 				for (iter = &buf.front(); iter <= &buf.back(); iter++)
 					count += int((iter->params.to - iter->params.from) / iter->params.delta + 1);
-				RECT rc;
 				const int n = int(N);
-				CDialog dlg;
-				EnableWindow(FALSE);
-				dlg.Create(IDD_WAIT);
-				dlg.CenterWindow();
-				dlg.ShowWindow(SW_SHOW);
-				dlg.UpdateWindow();
-				USHORT ar[6] = { 0, 0, 0, 0xffff, 0, 0 };
-				ProgressBar bar(NULL, n - 1, ar, RGB(0xff, 0xff, 0xff));
-				dlg.GetClientRect(&rc);
-				bar.Create(CRect(rc.left + 1, rc.top + 20, rc.right - 1, rc.bottom - 1), 1023, FromHandle((dlg.m_hWnd)));
-				dlg.UpdateWindow();
 				for (iter = &buf.front(); iter <= &buf.back(); iter++)
 				{
 					CString buf;
@@ -446,13 +407,10 @@ IMPLEMENT_DYNCREATE(CGraphViewerView, CFormView)
 						buf.Format("%lf\n", res);
 						fTitle += buf;
 						ofs << (LPCSTR)fTitle;
-						bar.DoStep();
 					}
 					fTitle = "[END]\n";
 					ofs << (LPCSTR)fTitle;
 				}
-				dlg1.DestroyWindow();
-				EnableWindow(TRUE);
 			}
 			ofs.close();
 		}
@@ -566,7 +524,7 @@ IMPLEMENT_DYNCREATE(CGraphViewerView, CFormView)
 			if(how == 0 || how == 2)
 			{
 				sz.cx = m_GraphRect.right;
-				if((m_disableGoto = (sz.cx <= m_clRect.right)))
+				if(sz.cx <= m_clRect.right)
 					sz.cx = 0;
 			}
 			if(how == 1 || how == 2)
@@ -645,11 +603,6 @@ IMPLEMENT_DYNCREATE(CGraphViewerView, CFormView)
 	void CGraphViewerView::OnUpdateShowgrid(CCmdUI* pCmdUI) 
 	{
 		pCmdUI->SetRadio(m_showGrid);	
-	}
-	//------------------------------------------------------------------------------------------//
-	void CGraphViewerView::OnUpdateGotoButton(CCmdUI* pCmdUI)
-	{
-		pCmdUI->Enable(!m_disableGoto);
 	}
 	//------------------------------------------------------------------------------------------//
 	void CGraphViewerView::OnUpdateFitToWindow(CCmdUI* pCmdUI)
@@ -788,37 +741,14 @@ IMPLEMENT_DYNCREATE(CGraphViewerView, CFormView)
 	{
 		m_scrlpos.x = m_scrlpos.y = 0;
 		m_showPt = false;
-		m_clArg = -1.0;
-		if (m_curFunc) {
-			delete m_curFunc;
-		}
+		m_clArg = -1;
 		m_curFunc = new Function();
+
 		CMainFrame *pMain = (CMainFrame*)AfxGetMainWnd();
 		if(pMain)
 			pMain->SetStatusText("", "");
 		SetScrollSizes(MM_TEXT, CSize(0, 0), CSize(m_clRect.right, m_clRect.bottom), 
 			CSize(m_interval, m_interval));
-	}
-	//------------------------------------------------------------------------------------------//
-	void CGraphViewerView::OnGoto()
-	{
-		CMainFrame *pMain = (CMainFrame*)AfxGetMainWnd();
-
-		if(!pMain)
-			return;
-
-		CString str;
-		pMain->GetGotoContent(str);
-
-		if(!FParser::isNumber((LPCSTR)str, (LPCSTR)str + str.GetLength()))
-			return;
-
-		double to = atof((LPCSTR)str);
-		if(to < m_curFunc->params.from || to > m_curFunc->params.to)
-			return;
-
-		SetScrollPos(SB_HORZ, m_graph->ArgToScreenX(to));
-		UpdateDraw();
 	}
 	//------------------------------------------------------------------------------------------//
 	void CGraphViewerView::OnFileNew()
@@ -830,3 +760,4 @@ IMPLEMENT_DYNCREATE(CGraphViewerView, CFormView)
 		UpdateDraw();
 		OnCloseupFuncCombo();
 	}
+	//------------------------------------------------------------------------------------------//

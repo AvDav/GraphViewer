@@ -21,7 +21,7 @@ protected:
 	CSpinButtonCtrl	m_spin;
 	BOOL m_checked;
 	//}}AFX_DATA
-
+public:
 	//{{AFX_MSG(GridPropDlg)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnGridColor();
@@ -29,7 +29,7 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
-private:
+public:
 	COLORREF  m_gridcol;
 	int       m_spinpos;
 };

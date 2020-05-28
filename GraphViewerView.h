@@ -19,8 +19,9 @@ class CGraph
 {
 public:
 	//---------------------------------------------------------------------------------------------//
-	CGraph(RECT rc, Function *pFunc, DWORD col) : m_x0(pFunc->params.from), m_xn(pFunc->params.to), m_gridColor(col)
+	CGraph(RECT rc, Function *pFunc, DWORD col) : m_x0(pFunc->params.from), m_xn(pFunc->params.to)
 	{
+		m_gridColor = col;
 		m_gridPen = CreatePen(PS_SOLID, 1, m_gridColor);
 		m_axisesPen= CreatePen(PS_SOLID, 2, RGB(0, 0, 0));
 		m_graphPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
@@ -188,15 +189,14 @@ private:
 		m_ratioX = double(m_rect.right - m_rect.left)/(m_xn - m_x0);
 		m_ratioY = double(m_rect.bottom - m_rect.top)/(pFunc->max - pFunc->min);	 
 	}
-
-	double    m_x0;
-	double    m_xn;
-	double    m_ratioX;
-	double    m_ratioY;
-
-	RECT      m_rect;
-	HPEN	  m_gridPen, m_axisesPen, m_graphPen;
-	DWORD	  m_gridColor;
+public:
+	double            m_x0;
+	double            m_xn;
+	double            m_ratioX;
+	double            m_ratioY;
+	RECT			  m_rect;
+	HPEN	          m_gridPen, m_axisesPen, m_graphPen;
+	DWORD			  m_gridColor;
 };
 
 class CGraphViewerView : public CFormView
@@ -227,9 +227,7 @@ protected:
 	afx_msg void OnUpdateZoomoutAlongOy(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateFileSave(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateFileSaveAs(CCmdUI* pCmdUI);
-	afx_msg void OnUpdateGotoButton(CCmdUI* pCmdUI);
 	afx_msg void OnBuild();
-	afx_msg void OnGoto();
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnUpdateShowgrid(CCmdUI* pCmdUI);
 	afx_msg void OnFitToWindow();
@@ -288,11 +286,9 @@ private:
 	int         m_interval;
 	bool        m_showPt;
 	bool        m_showGrid;
-	bool		m_disableGoto;
 public:
 	afx_msg void OnFileNew();
 };
-
 #ifndef _DEBUG 
 inline CGraphViewerDoc* CGraphViewerView::GetDocument()
 { return (CGraphViewerDoc*)m_pDocument; }

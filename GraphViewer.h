@@ -8,7 +8,7 @@
 
 #define ARRSIZE(x) ((sizeof(x))/(sizeof(x[(0)])))
 #define GRIDINTERVAL 20
-#define DEFAULTCOLOR RGB(0, 0, 120)
+#define DEFAULTCOLOR RGB(0, 0, 0xff)
 
 void ErrorMsg(int = GetLastError(), DWORD = FORMAT_MESSAGE_FROM_SYSTEM);
 class CGraphViewerApp : public CWinApp

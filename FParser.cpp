@@ -447,7 +447,8 @@ void FParser::Initialize(OperArray& opers) {
 			}
 		} 
 	}
-	(opers.end()-1)->pRes = NULL;
+	if(!opers.empty())
+		(opers.end()-1)->pRes = nullptr;
 }
 //------------------------------------------------------------------------------------------//
 CArchive& operator <<(CArchive& ar, funcParams params) {

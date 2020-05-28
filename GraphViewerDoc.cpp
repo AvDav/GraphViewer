@@ -22,24 +22,19 @@ IMPLEMENT_DYNCREATE(CGraphViewerDoc, CDocument)
 		m_fAr.clear();
 	}
 	//------------------------------------------------------------------------------------------//
-	CGraphViewerDoc::~CGraphViewerDoc()
-	{
-
-	}
+	CGraphViewerDoc::~CGraphViewerDoc() {}
 	//------------------------------------------------------------------------------------------//
 	BOOL CGraphViewerDoc::OnNewDocument()
 	{
 		if(!CDocument::OnNewDocument())
 			return FALSE;
-
 		m_gridCol = DEFAULTCOLOR;
 		m_interval = GRIDINTERVAL;
 		m_parsed = 0;
 		m_fCount = 0;
 		m_fAr.clear();
-		/*((CMainFrame*)AfxGetMainWnd())->CMainFrame::ClearFields();
-		POSITION pos = GetFirstViewPosition();
-		((CGraphViewerView*)GetNextView(pos))->Reset();*/
+		if (CMainFrame* pFrame = dynamic_cast<CMainFrame*>(AfxGetMainWnd()))
+			pFrame->ClearFields();
 		return TRUE;
 	}
 	//------------------------------------------------------------------------------------------//

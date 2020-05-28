@@ -43,9 +43,10 @@ BOOL GridPropDlg::OnInitDialog()
 void GridPropDlg::OnGridColor() 
 {
 	CColorDialog dlg(m_gridcol, CC_FULLOPEN);
-
-	if(dlg.DoModal()==IDOK)
+	if (dlg.DoModal() == IDOK) {
 		m_gridcol = dlg.GetColor();
+		m_spinpos = m_spin.GetPos();
+	}
 }
 //------------------------------------------------------------------------------------------//
 void GridPropDlg::OnOK() 

@@ -158,7 +158,10 @@ static func fncs[] = {
 	{"cos", cos}, {"sin", sin},
 	{"tan", tan}, {"ln",  log},
 	{"sinh", sinh}, {"cosh", cosh},
-	{"tanh", tanh}
+	{"tanh", tanh,}, {"sqrt", sqrt},
+	{"floor", floor}, {"fabs", fabs},
+	{"acos", acos}, {"asin", asin},
+	{"atan", atan}, {"ceil", ceil}
 };
 /*****************************************************************************/
 #endif 
